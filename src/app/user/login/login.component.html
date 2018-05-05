@@ -1,10 +1,10 @@
 <div>
-  <form>
+  <form [formGroup]="userForm">
     <label for="user">User</label>
-    <input type="text" id="user">
+    <input type="text" id="user" formControlName="user">
     <label for="pass">Password</label>
-    <input type="text" id="pass">
-    <input type="button" value="Entrar" (click)="login()">
+    <input type="text" id="pass" formControlName="pass">
+    <input type="button" value="Entrar" (click)="login()" [disabled]="userForm.invalid">
   </form>
 
   <button (click)="signup()">Crear cuenta</button>

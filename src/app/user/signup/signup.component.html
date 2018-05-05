@@ -1,8 +1,10 @@
-<p>
-  signup works!
-</p>
-
 <div>
-  <button>Crear usuario</button>
+  <form [formGroup]="userForm">
+    <label for="user">Email</label>
+    <input type="text" id="user" formControlName="email">
+    <label for="pass">Password</label>
+    <input type="text" id="pass" formControlName="password">
+    <input type="button" value="Crear cuenta" (click)="createUser()" [disabled]="userForm.invalid">
+  </form>
   <button routerLink="/login">Cancelar</button>
 </div>
