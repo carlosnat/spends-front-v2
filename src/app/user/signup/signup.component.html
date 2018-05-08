@@ -4,7 +4,7 @@
     <input type="text" id="user" formControlName="email">
     <label for="pass">Password</label>
     <input type="text" id="pass" formControlName="password">
-    <input type="button" value="Crear cuenta" (click)="createUser()" [disabled]="userForm.invalid">
+    <input type="button" value="Crear cuenta" (click)="createUser()" [disabled]="userForm.invalid || conecting">
   </form>
   <button routerLink="/login">Cancelar</button>
 </div>

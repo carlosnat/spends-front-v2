@@ -9,12 +9,21 @@ import { SpendGroupComponent } from './spend-group/spend-group.component';
 import { OperationComponent } from './operation/operation.component';
 import { FamilyComponent } from './family/family.component';
 import { HelpComponent } from './help/help.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    ReactiveFormsModule
   ],
-  declarations: [DashboardComponent, MainComponent, CategoryComponent, SpendGroupComponent, OperationComponent, FamilyComponent, HelpComponent]
+  declarations: [
+    DashboardComponent,
+    MainComponent,
+    CategoryComponent,
+    SpendGroupComponent,
+    OperationComponent,
+    FamilyComponent,
+    HelpComponent]
 })
 export class AdminModule { }

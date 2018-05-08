@@ -1,3 +1,9 @@
-<p>
-  family works!
-</p>
+<div>
+  <h1>Familia</h1>
+  <form [formGroup]="familyForm">
+    <h2>Crear familia</h2>
+    <label for="familyName">Nombre de familia</label>
+    <input type="text" id="familyName" formControlName="name">
+    <button (click)="createFamily()" [disabled]="familyForm.invalid">Crear</button>
+  </form>
+</div>

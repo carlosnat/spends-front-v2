@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { UserService } from '../service/user-service.service';
+import { UserService } from '../service/user-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -11,8 +12,9 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   userForm: FormGroup;
   private userSub;
+  private conecting = false;
 
-  constructor(private fb: FormBuilder, private userService: UserService) { }
+  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) { }
 
   ngOnInit() {
     this.createUserForm();
@@ -27,15 +29,23 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   async createUser() {
     if (this.userForm.valid) {
-      console.log(this.userForm.value);
-      this.userSub = this.userService.signup(this.userForm.value).subscribe( response => {
-        console.log('api response', response);
+      this.conecting = true;
+      this.userSub = this.userService.signup(this.userForm.value).subscribe(
+      (result) => {
+        this.userForm.reset();
+        this.router.navigate(['login']);
+        this.conecting = true;
+      },
+      (error) => {
+        this.conecting = false;
       });
     }
   }
 
   ngOnDestroy() {
-    this.userSub.unsubscribe();
+    if (this.userSub) {
+      this.userSub.unsubscribe();
+    }
   }
 
 }

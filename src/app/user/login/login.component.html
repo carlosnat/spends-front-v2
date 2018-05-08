@@ -1,11 +1,15 @@
 <div>
   <form [formGroup]="userForm">
     <label for="user">User</label>
-    <input type="text" id="user" formControlName="user">
+    <input type="text" id="user" formControlName="email">
     <label for="pass">Password</label>
-    <input type="text" id="pass" formControlName="pass">
+    <input type="text" id="pass" formControlName="password">
     <input type="button" value="Entrar" (click)="login()" [disabled]="userForm.invalid">
   </form>
 
   <button (click)="signup()">Crear cuenta</button>
+</div>
+
+<div *ngIf="errorMessage">
+  {{ errorMessage.error.message }}
 </div>

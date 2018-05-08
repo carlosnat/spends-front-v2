@@ -12,4 +12,16 @@ export class UserService {
   signup(userData) {
     return this.http.post(`${environment.api_base}user/signup`, userData);
   }
+
+  login(userData) {
+    return this.http.post(`${environment.api_base}user/login`, userData);
+  }
+
+  saveStorage(useData) {
+    window.localStorage.setItem('userData', JSON.stringify(useData));
+  }
+
+  clearStorage() {
+    window.localStorage.setItem('userData', '');
+  }
 }
