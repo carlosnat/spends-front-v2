@@ -9,13 +9,14 @@ import { SpendGroupComponent } from './spend-group/spend-group.component';
 import { OperationComponent } from './operation/operation.component';
 import { FamilyComponent } from './family/family.component';
 import { HelpComponent } from './help/help.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
     AdminRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   declarations: [
     DashboardComponent,

@@ -24,4 +24,8 @@ export class UserService {
   clearStorage() {
     window.localStorage.setItem('userData', '');
   }
+
+  getUserId() {
+    return JSON.parse(window.localStorage.getItem('userData')).userId;
+  }
 }

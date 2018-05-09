@@ -7,3 +7,18 @@
     <button (click)="createFamily()" [disabled]="familyForm.invalid">Crear</button>
   </form>
 </div>
+
+<div *ngIf="!editingFamily">
+  <div *ngFor="let family of  families">
+    {{ family.name }}
+    <button (click)="deleteFamily(family)">Borrar</button>
+    <button (click)="setEditFamily(family)">Editar</button>
+  </div>
+</div>
+
+<div *ngIf="editingFamily">
+  <span>{{ familyToEdit.name }}</span>
+  <input type="text" name="" id="" [value]="familyToEdit.name" [(ngModel)]="familyToEdit.name">
+  <button (click)="editFamily()">Ok</button>
+  <button (click)="editingFamily = !editingFamily">Cancelar</button>
+</div>
