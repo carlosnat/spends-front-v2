@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FamilyService } from './service/family-service';
 import { UserService } from '../../user/service/user-service';
+import { StoreService } from '../../store/store.service';
 
 @Component({
   selector: 'app-family',
@@ -15,7 +16,12 @@ export class FamilyComponent implements OnInit {
   public editingFamily = false;
   public familyToEdit;
 
-  constructor(private fb: FormBuilder, private familyService: FamilyService, private userService:  UserService) { }
+  constructor(
+    private fb: FormBuilder,
+    private familyService: FamilyService,
+     private userService:  UserService,
+    private store: StoreService
+  ) { }
 
   ngOnInit() {
     this.createFamilyForm();
@@ -44,7 +50,7 @@ export class FamilyComponent implements OnInit {
 
   getAllFamilies() {
     this.familyService.getAll(this.userService.getUserId()).subscribe( (res: any) => {
-      this.families = res.families;
+      this.families = res;
     });
   }
 
@@ -64,6 +70,10 @@ export class FamilyComponent implements OnInit {
       this.editingFamily = false;
       this.getAllFamilies();
     });
+  }
+
+  selectFamily(family) {
+    this.store.setFamily(family);
   }
 
 }
