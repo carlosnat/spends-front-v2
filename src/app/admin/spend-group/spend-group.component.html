@@ -1,28 +1,27 @@
 <div>
-    <h1>Grupos de la familia {{ family.name }}</h1>
-    <form [formGroup]="groupForm">
-      <h2>Crear familia</h2>
-      <label for="familyName">Nombre del grupo</label>
-      <input type="text" id="groupName" formControlName="name">
-      <label for="familyName">Color del grupo</label>
-      <input type="text" id="groupColor" formControlName="color">
-      <button (click)="createGroup()" [disabled]="groupForm.invalid">Crear grupo</button>
-    </form>
-  </div>
+  <h1>Grupos de la familia {{ family.name }}</h1>
+  <form [formGroup]="groupForm">
+    <h2>Crear familia</h2>
+    <label for="familyName">Nombre del grupo</label>
+    <input type="text" id="groupName" formControlName="name">
+    <label for="familyName">Color del grupo</label>
+    <input type="text" id="groupColor" formControlName="color">
+    <button (click)="createGroup()" [disabled]="groupForm.invalid">Crear grupo</button>
+  </form>
+</div>
 
-  <div *ngIf="!editingFamily">
-    <div *ngFor="let group of groups">
-      {{ group.name }}
-      {{ group.color }}
-      <!-- <button (click)="deleteFamily(family)">Borrar</button>
-      <button (click)="setEditFamily(family)">Editar</button>
-      <button (click)="selectFamily(family)">Seleecionar Familia</button> -->
-    </div>
+<div *ngIf="!editingGroup">
+  <div *ngFor="let group of groups">
+    {{ group.name }}
+    {{ group.color }}
+    <button (click)="deleteGroup(group)">Borrar</button>
+    <button (click)="setEditGroup(group)">Editar</button>
   </div>
+</div>
 
- <!--  <div *ngIf="editingFamily">
-    <span>{{ familyToEdit.name }}</span>
-    <input type="text" name="" id="" [value]="familyToEdit.name" [(ngModel)]="familyToEdit.name">
-    <button (click)="editFamily()">Ok</button>
-    <button (click)="editingFamily = !editingFamily">Cancelar</button>
-  </div> -->
+<div *ngIf="editingGroup">
+  <span>{{ groupToEdit.name }}</span>
+  <input type="text" name="" id="" [value]="groupToEdit.name" [(ngModel)]="groupToEdit.name">
+  <button (click)="editgroup()">Ok</button>
+  <button (click)="editingGroup = !editingGroup">Cancelar</button>
+</div>

@@ -13,6 +13,8 @@ export class SpendGroupComponent implements OnInit {
   public family;
   public groupForm: FormGroup;
   public groups;
+  public editingGroup = false;
+  public groupToEdit;
 
   constructor(private store: StoreService, private fb: FormBuilder, private groupSpendService: GroupSpendService) { }
 
@@ -35,23 +37,40 @@ export class SpendGroupComponent implements OnInit {
       newGroupData.belongsToFamily = this.family._id;
       this.groupSpendService.create(newGroupData)
       .subscribe( res => {
-        console.log('res', res);
         this.groupForm.reset();
         this.getAllGroups();
       }, err => {
         console.error(err);
       });
     }
-    console.log();
   }
 
   getAllGroups() {
-    this.groupSpendService.getAll(this.family._id).subscribe( groups => {
-      console.log('groups', groups);
+    this.groupSpendService.getAll(this.family._id).subscribe( (groups) => {
       this.groups = groups;
     });
   }
 
+  setEditGroup(group) {
+    this.groupToEdit = group;
+    this.editingGroup = true;
+  }
+
+  editgroup() {
+    console.log('save changes');
+    this.groupSpendService.edit(this.groupToEdit).subscribe( res => {
+      console.log('res', res);
+      this.editingGroup = false;
+      this.getAllGroups();
+    });
+  }
+
+  deleteGroup(group) {
+    this.groupSpendService.delete(group._id).subscribe( res => {
+      console.log('res', res);
+      this.getAllGroups();
+    });
+  }
 
 
 }
