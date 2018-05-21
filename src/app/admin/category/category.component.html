@@ -1,3 +1,32 @@
-<p>
-  category works!
-</p>
+<div>
+  <form [formGroup]="categoryForm">
+    <h2>Crear Categoia</h2>
+    <label for="">Seleccionar grupo</label>
+    <select formControlName="belongsToGroup">
+      <option [value]="group._id" *ngFor="let group of familyStore.spendsGroups">{{ group.name }}</option>
+    </select>
+    <label for="categoryName">Nombre de la categoria</label>
+    <input type="text" id="categoryName" formControlName="name">
+    <label for="categoryIcono">Icono de la categoria</label>
+    <input type="text" id="categoryIcono" formControlName="icono">
+    <button (click)="createCategory()" [disabled]="categoryForm.invalid">Crear categoria</button>
+  </form>
+</div>
+
+<div *ngIf="!editingCategory">
+  <div *ngFor="let category of categories">
+    {{ category.name }}
+    {{ category.icono }}
+    <button (click)="deleteCategory(category)">Borrar</button>
+    <button (click)="setEditCategory(category)">Editar</button>
+  </div>
+</div>
+
+<div *ngIf="editingCategory">
+  <span>{{categoryToEdit.name }}</span>
+  <input type="text" name="" id="" [value]="categoryToEdit.name" [(ngModel)]="categoryToEdit.name">
+  <span>{{categoryToEdit.icono }}</span>
+  <input type="text" name="" id="" [value]="categoryToEdit.icono" [(ngModel)]="categoryToEdit.icono">
+  <button (click)="editCategory()">Ok</button>
+  <button (click)="editingCategory = !editingCategory">Cancelar</button>
+</div>

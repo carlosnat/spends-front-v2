@@ -7,22 +7,24 @@ import { environment } from '../../../../environments/environment';
 })
 export class GroupSpendService {
 
+  endpoint = 'spendgroup';
+
   constructor(private http: HttpClient) {}
 
   getAll(familyId) {
-    return this.http.get(`${environment.api_base}spendgroup`, { params: { familyId: familyId } });
+    return this.http.get(`${environment.api_base}${this.endpoint}`, { params: { familyId: familyId } });
   }
 
   create(GroupSpendData) {
-    return this.http.post(`${environment.api_base}spendgroup`, GroupSpendData);
+    return this.http.post(`${environment.api_base}${this.endpoint}`, GroupSpendData);
   }
 
   delete(idGroupSpend) {
-    return this.http.delete(`${environment.api_base}spendgroup`, { params: { _id: idGroupSpend }});
+    return this.http.delete(`${environment.api_base}${this.endpoint}`, { params: { _id: idGroupSpend }});
   }
 
   edit(GroupSpendData) {
-    return this.http.put(`${environment.api_base}spendgroup`, GroupSpendData);
+    return this.http.put(`${environment.api_base}${this.endpoint}`, GroupSpendData);
   }
 
 }

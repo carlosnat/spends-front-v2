@@ -7,22 +7,24 @@ import { environment } from '../../../../environments/environment';
 })
 export class FamilyService {
 
+  endpoint = 'family';
+
   constructor(private http: HttpClient) {}
 
   getAll(userId) {
-    return this.http.get(`${environment.api_base}family`, { params: { userId: userId } });
+    return this.http.get(`${environment.api_base}${this.endpoint}`, { params: { userId: userId } });
   }
 
   create(familyData) {
-    return this.http.post(`${environment.api_base}family`, familyData);
+    return this.http.post(`${environment.api_base}${this.endpoint}`, familyData);
   }
 
   delete(idFamily) {
-    return this.http.delete(`${environment.api_base}family`, { params: { _id: idFamily }});
+    return this.http.delete(`${environment.api_base}${this.endpoint}`, { params: { _id: idFamily }});
   }
 
   edit(familyData) {
-    return this.http.put(`${environment.api_base}family`, familyData);
+    return this.http.put(`${environment.api_base}${this.endpoint}`, familyData);
   }
 
 }
