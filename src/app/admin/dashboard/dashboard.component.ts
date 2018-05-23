@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import { OperationService } from '../operation/service/operation.service';
+import { StoreService } from '../../store/store.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  opeartions;
+
+  constructor(private store: StoreService, private opearationService: OperationService) { }
 
   ngOnInit() {
+    this.opearationService.getAll(this.store.getFamily()._id).subscribe( res => {
+      this.opeartions = res;
+    });
   }
 
 }

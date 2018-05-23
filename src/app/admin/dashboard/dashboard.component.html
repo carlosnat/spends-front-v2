@@ -1,3 +1,34 @@
 <p>
-  dashboard works!
+  Tabla de operacions
 </p>
+
+<div>
+  <table>
+    <thead>
+        <tr>
+          <th>#</th>
+          <th>Fecha registro</th>
+          <th>Fecha de operación</th>
+          <th>Grupo</th>
+          <th>Categoria</th>
+          <th>Tipo de opearación</th>
+          <th>Descripción</th>
+          <th>Monto</th>
+        </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let operation of opeartions; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ operation.createdAt | date:'dd-MMM-y HH:mm' }}</td>
+        <td>{{ operation.occurrenceDate | date }}</td>
+        <td>{{ operation.category.name }}</td>
+        <td>{{ operation.group.name }}</td>
+        <td>{{ operation.type }}</td>
+        <td>{{ operation.description }}</td>
+        <td>{{ operation.amount }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
