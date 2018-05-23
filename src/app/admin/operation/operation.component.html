@@ -1,3 +1,27 @@
-<p>
-  operation works!
-</p>
+<form [formGroup]="operationForm">
+  <label for="groupSelect">Selecciona grupo de gasto</label>
+  <select (change)="setGroupSelected($event.target.value)" formControlName="group">
+    <option [value]="group._id" *ngFor="let group of family.spendsGroups">{{ group.name }}</option>
+  </select>
+  <br>
+  <label for="groupSelect">Selecciona categoria de gasto</label>
+  <select formControlName="category">
+    <option [value]="category._id" *ngFor="let category of categories">{{ category.name }}</option>
+  </select>
+  <br>
+  <label>Cantidad</label>
+  <input type="number" formControlName="amount">
+  <br>
+  <label>description</label>
+  <textarea cols="30" rows="10" formControlName="description"></textarea>
+  <br>
+  <label>occurrenceDate</label>
+  <input type="date" formControlName="occurrenceDate">
+  <br>
+  <select formControlName="type">
+    <option value="inflow">Gasto</option>
+    <option value="outflow">Ingreso</option>
+  </select>
+</form>
+
+<button (click)="saveOperation()">Guardar operación</button>
