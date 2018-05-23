@@ -14,24 +14,28 @@ export class CategoryComponent implements OnInit {
   categories;
   editingCategory = false;
   categoryToEdit;
+  AllCategories;
+  groupIdSelected;
 
   constructor(private store: StoreService, private fb: FormBuilder, private caterogyService: CategoryService) { }
 
   ngOnInit() {
+    this.categories = [];
     this.familyStore = this.store.getFamily();
-    this.getAllCategories();
     this.createCategoryForm();
+    this.getAllCategories();
   }
 
   getAllCategories() {
     this.caterogyService.getAll(this.familyStore._id).subscribe( categories => {
-      this.categories = categories;
+      this.AllCategories = categories;
+      if (this.groupIdSelected) { this.selectGroup(this.groupIdSelected); }
     });
   }
 
   createCategoryForm() {
     this.categoryForm = this.fb.group({
-      belongsToGroup: [this.familyStore.spendsGroups[0]._id, Validators.required],
+      belongsToGroup: ['', Validators.required],
       name: ['', Validators.required],
       icono: ['', Validators.required]
     });
@@ -42,8 +46,8 @@ export class CategoryComponent implements OnInit {
       const categoryToCreate =  this.categoryForm.value;
       categoryToCreate.belongsToFamily = this.familyStore._id;
       this.caterogyService.create(categoryToCreate).subscribe( res => {
-        console.log('res', res);
-        this.categoryForm.reset();
+        this.categoryForm.get('name').setValue('');
+        this.categoryForm.get('icono').setValue('');
         this.getAllCategories();
       });
     }
@@ -61,12 +65,15 @@ export class CategoryComponent implements OnInit {
   }
 
   editCategory() {
-    console.log('save changes');
     this.caterogyService.edit(this.categoryToEdit).subscribe( res => {
-      console.log('res', res);
       this.editingCategory = false;
       this.getAllCategories();
     });
+  }
+
+  selectGroup(groupId) {
+    this.groupIdSelected = groupId;
+    this.categories = this.AllCategories.filter( category => category.belongsToGroup === this.groupIdSelected);
   }
 
 }

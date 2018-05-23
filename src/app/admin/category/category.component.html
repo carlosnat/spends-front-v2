@@ -1,12 +1,15 @@
 <div>
   <form [formGroup]="categoryForm">
     <h2>Crear Categoia</h2>
-    <label for="">Seleccionar grupo</label>
-    <select formControlName="belongsToGroup">
+    <label>Seleccionar grupo</label>
+    <select formControlName="belongsToGroup" (change)="selectGroup($event.target.value)">
+      <option value="">Seleeciona un grupo</option>
       <option [value]="group._id" *ngFor="let group of familyStore.spendsGroups">{{ group.name }}</option>
     </select>
+    <br>
     <label for="categoryName">Nombre de la categoria</label>
     <input type="text" id="categoryName" formControlName="name">
+    <br>
     <label for="categoryIcono">Icono de la categoria</label>
     <input type="text" id="categoryIcono" formControlName="icono">
     <button (click)="createCategory()" [disabled]="categoryForm.invalid">Crear categoria</button>
