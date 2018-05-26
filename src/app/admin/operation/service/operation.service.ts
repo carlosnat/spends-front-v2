@@ -27,4 +27,11 @@ export class OperationService {
     return this.http.put(`${environment.api_base}${this.endpoint}`, operationData);
   }
 
+  uploadImage(operationImage) {
+    return this.http.post(`${environment.api_base}${this.endpoint}/upload`, operationImage, {
+      reportProgress: true,
+      observe: 'events'
+    });
+  }
+
 }

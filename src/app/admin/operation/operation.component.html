@@ -22,6 +22,11 @@
     <option value="inflow">Gasto</option>
     <option value="outflow">Ingreso</option>
   </select>
+  <br>
+  <label>Imagen de respaldo</label>
+  <input type="file" style="display: none" #inputUpload (change)="onSelectedFile($event)">
+  <button (click)="inputUpload.click()">Pick Foto</button>
+  <img [src]="imagePreview" alt="" accept="image/*" style="max-width: 50%;">
+  <button (click)="uploadImage()">Guardar operación</button>
+  <div *ngIf="isUploading"><span>{{ uploadImageProgress }} %</span></div>
 </form>
-
-<button (click)="saveOperation()">Guardar operación</button>
