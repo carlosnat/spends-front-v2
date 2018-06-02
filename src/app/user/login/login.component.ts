@@ -32,13 +32,15 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   login() {
     if (this.userForm.valid) {
-      this.loginSub = this.userService.login(this.userForm.value).subscribe( res => {
-        this.userService.saveStorage(res);
-        this.router.navigate(['admin/stats']);
-      },
-      err => {
-        this.showMessage(err);
-      });
+      this.loginSub = this.userService.login(this.userForm.value).subscribe(
+        res => {
+          this.userService.saveStorage(res);
+          this.router.navigate(['admin/stats']);
+        },
+        err => {
+          this.showMessage(err);
+        }
+      );
     }
   }
 
