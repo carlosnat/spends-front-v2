@@ -11,8 +11,8 @@ import { Router } from '@angular/router';
 export class SignupComponent implements OnInit, OnDestroy {
 
   userForm: FormGroup;
-  private userSub;
-  private conecting = false;
+  public userSub;
+  public conecting = false;
 
   constructor(private fb: FormBuilder, private userService: UserService, private router: Router) { }
 
