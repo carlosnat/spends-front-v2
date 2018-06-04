@@ -16,7 +16,7 @@ export class GroupSpendService {
   }
 
   create(GroupSpendData) {
-    return this.http.post(`${environment.api_base}${this.endpoint}`, GroupSpendData);
+    return this.http.post(`${environment.api_base}${this.endpoint}`, GroupSpendData).toPromise();
   }
 
   delete(idGroupSpend) {

@@ -4,6 +4,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { OperationService } from './service/operation.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { HttpEventType } from '@angular/common/http';
+import { Family } from '../../store/family';
+
 @Component({
   selector: 'app-operation',
   templateUrl: './operation.component.html',
@@ -11,7 +13,7 @@ import { HttpEventType } from '@angular/common/http';
 })
 export class OperationComponent implements OnInit {
 
-  family;
+  public family: Family;
   categories;
   operationForm: FormGroup;
   imagePreview;
@@ -27,7 +29,9 @@ export class OperationComponent implements OnInit {
     private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
-    this.family = this.store.getFamily();
+    this.store.currentFamily.subscribe( (family: Family) => {
+      this.family = family;
+    });
     this.createOperationForm();
   }
 
@@ -43,7 +47,7 @@ export class OperationComponent implements OnInit {
   }
 
   setGroupSelected(groupId) {
-    this.categories = this.family.categories.filter( category => category.belongsToGroup === groupId);
+    this.categories = this.family.categories.filter( (category: any) => category.belongsToGroup === groupId);
   }
 
   onSelectedFile(event) {
@@ -71,10 +75,11 @@ export class OperationComponent implements OnInit {
       const operation = this.operationForm.value;
       operation.family = this.family._id;
       operation.image = this.imageDataSaved;
-      this.operationService.create(operation).subscribe(res => {
+      this.operationService.create(operation).subscribe( async (res) => {
         this.operationForm.reset();
         this.operationImage = null;
         this.imagePreview = null;
+        await this.store.updateFamily(this.family._id);
       });
     }
   }

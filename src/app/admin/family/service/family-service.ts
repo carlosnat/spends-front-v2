@@ -12,7 +12,7 @@ export class FamilyService {
   constructor(private http: HttpClient) {}
 
   getAll(userId) {
-    return this.http.get(`${environment.api_base}${this.endpoint}`, { params: { userId: userId } });
+    return this.http.get(`${environment.api_base}${this.endpoint}/user/${userId}`);
   }
 
   create(familyData) {

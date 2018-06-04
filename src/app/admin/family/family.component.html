@@ -8,8 +8,8 @@
   </form>
 </div>
 
-<div *ngIf="!editingFamily">
-  <div *ngFor="let family of  families">
+<div *ngIf="!editingFamily && families && families.length > 0">
+  <div *ngFor="let family of families">
     {{ family.name }}
     <button (click)="deleteFamily(family)">Borrar</button>
     <button (click)="setEditFamily(family)">Editar</button>

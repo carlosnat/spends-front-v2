@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { StoreService } from '../../store/store.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CategoryService } from './service/category.service';
+import { Family } from '../../store/family';
+
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
@@ -10,8 +12,8 @@ import { CategoryService } from './service/category.service';
 export class CategoryComponent implements OnInit {
 
   categoryForm: FormGroup;
-  familyStore;
-  categories;
+  public family: Family;
+  categories = [];
   editingCategory = false;
   categoryToEdit;
   AllCategories;
@@ -20,17 +22,16 @@ export class CategoryComponent implements OnInit {
   constructor(private store: StoreService, private fb: FormBuilder, private caterogyService: CategoryService) { }
 
   ngOnInit() {
-    this.categories = [];
-    this.familyStore = this.store.getFamily();
+    this.store.currentFamily.subscribe( (family: Family) => {
+      this.family = family;
+      this.getAllCategories();
+    });
     this.createCategoryForm();
-    this.getAllCategories();
   }
 
   getAllCategories() {
-    this.caterogyService.getAll(this.familyStore._id).subscribe( categories => {
-      this.AllCategories = categories;
+      this.AllCategories = this.family.categories;
       if (this.groupIdSelected) { this.selectGroup(this.groupIdSelected); }
-    });
   }
 
   createCategoryForm() {
@@ -44,18 +45,18 @@ export class CategoryComponent implements OnInit {
   createCategory() {
     if (this.categoryForm.valid) {
       const categoryToCreate =  this.categoryForm.value;
-      categoryToCreate.belongsToFamily = this.familyStore._id;
-      this.caterogyService.create(categoryToCreate).subscribe( res => {
+      categoryToCreate.belongsToFamily = this.family._id;
+      this.caterogyService.create(categoryToCreate).subscribe( async (res) => {
         this.categoryForm.get('name').setValue('');
         this.categoryForm.get('icono').setValue('');
-        this.getAllCategories();
+        await this.store.updateFamily(this.family._id);
       });
     }
   }
 
   deleteCategory(category) {
-    this.caterogyService.delete(category._id).subscribe( res => {
-      this.getAllCategories();
+    this.caterogyService.delete(category._id).subscribe( async (res) => {
+      await this.store.updateFamily(this.family._id);
     });
   }
 
@@ -65,9 +66,9 @@ export class CategoryComponent implements OnInit {
   }
 
   editCategory() {
-    this.caterogyService.edit(this.categoryToEdit).subscribe( res => {
+    this.caterogyService.edit(this.categoryToEdit).subscribe( async (res) => {
       this.editingCategory = false;
-      this.getAllCategories();
+      await this.store.updateFamily(this.family._id);
     });
   }
 
