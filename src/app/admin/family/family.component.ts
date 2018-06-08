@@ -47,6 +47,7 @@ export class FamilyComponent implements OnInit {
       this.familyService.create(familyData)
       .subscribe( res => {
         this.familyForm.reset();
+        this.creatingFamily = false;
         this.getAllFamilies();
       }, err => {
         console.error(err);

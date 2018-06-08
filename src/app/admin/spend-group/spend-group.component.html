@@ -1,26 +1,49 @@
-<div>
-  <h1>Crear grupo de operaciones</h1>
-  <form [formGroup]="groupForm">
-    <label for="familyName">Nombre del grupo</label>
-    <input type="text" id="groupName" formControlName="name">
-    <label for="familyName">Color del grupo</label>
-    <input type="text" id="groupColor" formControlName="color">
-    <button (click)="createGroup()" [disabled]="groupForm.invalid">Crear grupo</button>
+<mat-card *ngIf="creatingGroup">
+  <mat-list>
+    <h3 mat-subheader>Crear grupo de operaciones</h3>
+  </mat-list>
+  <form [formGroup]="groupForm" style="display: flex; flex-direction: column;">
+    <mat-form-field>
+        <input type="text" matInput placeholder="Nombre"  formControlName="name">
+    </mat-form-field>
+    <mat-form-field>
+        <input type="text" matInput placeholder="Color"  formControlName="color">
+    </mat-form-field>
+    <button mat-button (click)="createGroup()" [disabled]="groupForm.invalid">Crear grupo</button>
   </form>
-</div>
+</mat-card>
 
-<div *ngIf="!editingGroup">
-  <div *ngFor="let group of groups">
-    {{ group.name }}
-    {{ group.color }}
-    <button (click)="deleteGroup(group)">Borrar</button>
-    <button (click)="setEditGroup(group)">Editar</button>
+<mat-card *ngIf="!editingGroup && !creatingGroup">
+    <mat-list *ngIf="!editingGroup && groups && groups.length > 0">
+      <h3 mat-subheader>Grupos para categorias creados</h3>
+      <mat-list-item *ngFor="let group of groups">
+        <mat-icon mat-list-icon>group</mat-icon>
+        <h4 mat-line>{{ group.name }} - {{ group.color }}</h4>
+        <button mat-icon-button (click)="deleteGroup(group)">
+          <mat-icon aria-label="Example icon-button with a heart icon">delete</mat-icon>
+        </button>
+        <button mat-icon-button (click)="setEditGroup(group)">
+          <mat-icon aria-label="Example icon-button with a heart icon">edit</mat-icon>
+        </button>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-list>
+  </mat-card>
+
+<mat-card *ngIf="editingGroup" style="display: flex; flex-direction: column">
+  <mat-list>
+    <h3 mat-subheader>Editar grupo</h3>
+  </mat-list>
+  <mat-form-field>
+      <input type="text" matInput placeholder="Nombre"  [value]="groupToEdit.name" [(ngModel)]="groupToEdit.name">
+  </mat-form-field>
+  <div style="display: flex; flex-direction:row; justify-content: space-around">
+    <button mat-button (click)="editgroup()">Ok</button>
+    <button mat-button (click)="editingGroup = !editingGroup">Cancelar</button>
   </div>
-</div>
+</mat-card>
 
-<div *ngIf="editingGroup">
-  <span>{{ groupToEdit.name }}</span>
-  <input type="text" name="" id="" [value]="groupToEdit.name" [(ngModel)]="groupToEdit.name">
-  <button (click)="editgroup()">Ok</button>
-  <button (click)="editingGroup = !editingGroup">Cancelar</button>
-</div>
+<button class="btn-create-family" mat-fab color="primary" (click)="creatingGroup = !creatingGroup">
+    <mat-icon *ngIf="creatingGroup">close</mat-icon>
+    <mat-icon *ngIf="!creatingGroup">add</mat-icon>
+</button>

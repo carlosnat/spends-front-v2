@@ -1,15 +1,21 @@
-<mat-card *ngIf="creatingFamily">
-  <form [formGroup]="familyForm">
-    <h3 mat-subheader>Crear familia</h3>
-    <label for="familyName">Nombre de familia</label>
-    <input type="text" id="familyName" formControlName="name">
-    <button (click)="createFamily()" [disabled]="familyForm.invalid">Crear</button>
-  </form>
+<mat-card style="margin-bottom: 1%;">
+    <h3>Familia seleccionada</h3>
+    <p>{{ familySelected.name }}</p>
 </mat-card>
 
+<mat-card class="example-container" *ngIf="creatingFamily">
+  <mat-card-title>
+    <p>Crear familia</p>
+  </mat-card-title>
+  <form [formGroup]="familyForm">
+    <mat-form-field>
+      <input matInput placeholder="Input" formControlName="name">
+    </mat-form-field>
+    <button style="display: block" mat-button (click)="createFamily()" [disabled]="familyForm.invalid">Crear</button>
+  </form>
+</mat-card >
+
 <mat-card *ngIf="!creatingFamily && !editingFamily">
-  <h3>Familia seleccionada</h3>
-  <h4>{{ familySelected.name }}</h4>
   <mat-list *ngIf="!editingFamily && families && families.length > 0">
     <h3 mat-subheader>Familas creadas</h3>
     <mat-list-item *ngFor="let family of families">
@@ -27,13 +33,21 @@
   </mat-list>
 </mat-card>
 
-<mat-card *ngIf="editingFamily">
-  <span>{{ familyToEdit.name }}</span>
-  <input type="text" name="" id="" [value]="familyToEdit.name" [(ngModel)]="familyToEdit.name">
-  <button (click)="editFamily()">Ok</button>
-  <button (click)="editingFamily = !editingFamily">Cancelar</button>
+<mat-card *ngIf="editingFamily" style="display: flex; flex-direction: column;">
+  <mat-card-title>
+    <p>Nombre: {{ familyToEdit.name }}</p>
+  </mat-card-title>
+
+  <mat-form-field>
+    <input matInput type="text" [value]="familyToEdit.name" [(ngModel)]="familyToEdit.name">
+  </mat-form-field>
+  <div style="display: flex; flex-direction: row; justify-content: space-around;">
+    <button mat-button (click)="editFamily()">Ok</button>
+    <button mat-button (click)="editingFamily = !editingFamily">Cancelar</button>
+  </div>
 </mat-card>
 
 <button class="btn-create-family" mat-fab color="primary" (click)="creatingFamily = !creatingFamily">
-    <mat-icon>add</mat-icon>
+    <mat-icon *ngIf="creatingFamily">close</mat-icon>
+    <mat-icon *ngIf="!creatingFamily">add</mat-icon>
 </button>

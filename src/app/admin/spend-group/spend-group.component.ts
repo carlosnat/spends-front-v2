@@ -16,6 +16,7 @@ export class SpendGroupComponent implements OnInit {
   public groups;
   public editingGroup = false;
   public groupToEdit;
+  public creatingGroup = false;
 
   constructor(private store: StoreService, private fb: FormBuilder, private groupSpendService: GroupSpendService) { }
 
@@ -41,6 +42,7 @@ export class SpendGroupComponent implements OnInit {
       await this.groupSpendService.create(newGroupData);
       this.groupForm.reset();
       await this.store.updateFamily(this.family._id);
+      this.creatingGroup = false;
     }
   }
 
