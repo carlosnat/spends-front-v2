@@ -1,0 +1,42 @@
+.auth {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mat-card-title {
+  text-align: center;
+}
+
+.mat-card {
+  width: 50vh;
+}
+
+.mat-form-field{
+  width: 100%;
+}
+
+.loginError {
+  padding: 16px;
+  width: 300px;
+  color: white;
+  background-color: red;
+  text-align: center;
+}
+
+.loginButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.logo-auth {
+  max-width: 30vh;
+}
+
+.auth-btn-wrap{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}

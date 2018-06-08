@@ -15,13 +15,19 @@ export class FamilyComponent implements OnInit {
   public families;
   public editingFamily = false;
   public familyToEdit;
+  public creatingFamily = false;
+  public familySelected;
 
   constructor(
     private fb: FormBuilder,
     private familyService: FamilyService,
      private userService:  UserService,
     private store: StoreService
-  ) { }
+  ) {
+    this.store.currentFamily.subscribe( family => {
+      this.familySelected = family;
+    });
+   }
 
   ngOnInit() {
     this.createFamilyForm();
@@ -74,6 +80,7 @@ export class FamilyComponent implements OnInit {
 
   selectFamily(family) {
     this.store.setFamily(family);
+    this.getAllFamilies();
   }
 
 }

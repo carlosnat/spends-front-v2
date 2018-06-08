@@ -10,13 +10,17 @@ import { OperationComponent } from './operation/operation.component';
 import { FamilyComponent } from './family/family.component';
 import { HelpComponent } from './help/help.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { CoreModule } from '../core/core.module';
+import { MaterialModule } from '../material/material.module';
 
 @NgModule({
   imports: [
     CommonModule,
     AdminRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    CoreModule,
+    MaterialModule
   ],
   declarations: [
     DashboardComponent,
@@ -25,6 +29,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     SpendGroupComponent,
     OperationComponent,
     FamilyComponent,
-    HelpComponent]
+    HelpComponent
+  ]
 })
 export class AdminModule { }

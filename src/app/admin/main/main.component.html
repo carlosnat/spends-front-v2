@@ -1,24 +1,5 @@
-<ul>
-  <li>
-    <button routerLink="families">Familias</button>
-  </li>
-  <li>
-    <button routerLink="stats">Estadisticas</button>
-  </li>
-  <li>
-    <button routerLink="operations">Operaciónes</button>
-  </li>
-  <li>
-    <button routerLink="groups">Grupos</button>
-  </li>
-  <li>
-    <button routerLink="categories">Categorias</button>
-  </li>
-  <li>
-    <button routerLink="help">Ayuda</button>
-  </li>
-</ul>
-
-<button (click)="logOut()">Salir</button>
-
-<router-outlet></router-outlet>
+<app-nav-bar>
+  <div class="main-wrap">
+    <router-outlet></router-outlet>
+  </div>
+</app-nav-bar>

@@ -1,25 +1,39 @@
-<div>
-  <h1>Familia</h1>
+<mat-card *ngIf="creatingFamily">
   <form [formGroup]="familyForm">
-    <h2>Crear familia</h2>
+    <h3 mat-subheader>Crear familia</h3>
     <label for="familyName">Nombre de familia</label>
     <input type="text" id="familyName" formControlName="name">
     <button (click)="createFamily()" [disabled]="familyForm.invalid">Crear</button>
   </form>
-</div>
+</mat-card>
 
-<div *ngIf="!editingFamily && families && families.length > 0">
-  <div *ngFor="let family of families">
-    {{ family.name }}
-    <button (click)="deleteFamily(family)">Borrar</button>
-    <button (click)="setEditFamily(family)">Editar</button>
-    <button (click)="selectFamily(family)">Seleecionar Familia</button>
-  </div>
-</div>
+<mat-card *ngIf="!creatingFamily && !editingFamily">
+  <h3>Familia seleccionada</h3>
+  <h4>{{ familySelected.name }}</h4>
+  <mat-list *ngIf="!editingFamily && families && families.length > 0">
+    <h3 mat-subheader>Familas creadas</h3>
+    <mat-list-item *ngFor="let family of families">
+      <mat-icon mat-list-icon>group</mat-icon>
+      <h4 mat-line>{{ family.name}}</h4>
+      <button mat-icon-button (click)="deleteFamily(family)">
+        <mat-icon aria-label="Example icon-button with a heart icon">delete</mat-icon>
+      </button>
+      <button mat-icon-button (click)="setEditFamily(family)">
+        <mat-icon aria-label="Example icon-button with a heart icon">edit</mat-icon>
+      </button>
+      <mat-slide-toggle (click)="selectFamily(family)" [checked]="familySelected ._id === family._id"></mat-slide-toggle>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </mat-list>
+</mat-card>
 
-<div *ngIf="editingFamily">
+<mat-card *ngIf="editingFamily">
   <span>{{ familyToEdit.name }}</span>
   <input type="text" name="" id="" [value]="familyToEdit.name" [(ngModel)]="familyToEdit.name">
   <button (click)="editFamily()">Ok</button>
   <button (click)="editingFamily = !editingFamily">Cancelar</button>
-</div>
+</mat-card>
+
+<button class="btn-create-family" mat-fab color="primary" (click)="creatingFamily = !creatingFamily">
+    <mat-icon>add</mat-icon>
+</button>
