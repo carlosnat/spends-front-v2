@@ -14,21 +14,21 @@
 </mat-card>
 
 <mat-card *ngIf="!editingGroup && !creatingGroup">
-    <mat-list *ngIf="!editingGroup && groups && groups.length > 0">
-      <h3 mat-subheader>Grupos para categorias creados</h3>
-      <mat-list-item *ngFor="let group of groups">
-        <mat-icon mat-list-icon>group</mat-icon>
-        <h4 mat-line>{{ group.name }} - {{ group.color }}</h4>
-        <button mat-icon-button (click)="deleteGroup(group)">
-          <mat-icon aria-label="Example icon-button with a heart icon">delete</mat-icon>
-        </button>
-        <button mat-icon-button (click)="setEditGroup(group)">
-          <mat-icon aria-label="Example icon-button with a heart icon">edit</mat-icon>
-        </button>
-        <mat-divider></mat-divider>
-      </mat-list-item>
-    </mat-list>
-  </mat-card>
+  <mat-list *ngIf="!editingGroup && groups && groups.length > 0">
+    <h3 mat-subheader>Grupos para categorias creados</h3>
+    <mat-list-item *ngFor="let group of groups">
+      <mat-icon mat-list-icon>group</mat-icon>
+      <h4 mat-line>{{ group.name }} - {{ group.color }}</h4>
+      <button mat-icon-button (click)="deleteGroup(group)">
+        <mat-icon aria-label="Example icon-button with a heart icon">delete</mat-icon>
+      </button>
+      <button mat-icon-button (click)="setEditGroup(group)">
+        <mat-icon aria-label="Example icon-button with a heart icon">edit</mat-icon>
+      </button>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </mat-list>
+</mat-card>
 
 <mat-card *ngIf="editingGroup" style="display: flex; flex-direction: column">
   <mat-list>

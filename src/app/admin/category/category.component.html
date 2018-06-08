@@ -1,35 +1,61 @@
-<div>
+<mat-card *ngIf="!editingCategory">
+  <mat-card-subtitle>
+      <h2>Categorías</h2>
+  </mat-card-subtitle>
   <form [formGroup]="categoryForm">
-    <h2>Crear Categoia</h2>
-    <label>Seleccionar grupo</label>
-    <select formControlName="belongsToGroup" (change)="selectGroup($event.target.value)">
-      <option value="">Seleeciona un grupo</option>
-      <option [value]="group._id" *ngFor="let group of family.spendsGroups">{{ group.name }}</option>
-    </select>
-    <br>
-    <label for="categoryName">Nombre de la categoria</label>
-    <input type="text" id="categoryName" formControlName="name">
-    <br>
-    <label for="categoryIcono">Icono de la categoria</label>
-    <input type="text" id="categoryIcono" formControlName="icono">
-    <button (click)="createCategory()" [disabled]="categoryForm.invalid">Crear categoria</button>
+
+    <mat-form-field>
+      <mat-select placeholder="Seleccionar grupo" formControlName="belongsToGroup" (selectionChange)="selectGroup($event.value)">
+        <mat-option *ngFor="let group of family.spendsGroups" [value]="group">
+            {{ group.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div *ngIf="creatingCategory" style="display: flex; flex-direction: column;">
+      <mat-form-field>
+          <input type="text" matInput placeholder="Nombre"  formControlName="name">
+      </mat-form-field>
+      <mat-form-field>
+          <input type="text" matInput placeholder="Icono"  formControlName="icono">
+      </mat-form-field>
+      <button mat-button (click)="createCategory()" [disabled]="categoryForm.invalid">Crear categoria</button>
+    </div>
+
   </form>
-</div>
 
-<div *ngIf="!editingCategory">
-  <div *ngFor="let category of categories">
-    {{ category.name }}
-    {{ category.icono }}
-    <button (click)="deleteCategory(category)">Borrar</button>
-    <button (click)="setEditCategory(category)">Editar</button>
+  <mat-list *ngIf="!editingCategory && !creatingCategory && categories && categories.length > 0">
+    <mat-list-item *ngFor="let category of categories">
+      <mat-icon mat-list-icon>group</mat-icon>
+      <h4 mat-line>{{ category.name }} - {{ category.icono }}</h4>
+      <button mat-icon-button (click)="deleteCategory(category)">
+        <mat-icon aria-label="Example icon-button with a heart icon">delete</mat-icon>
+      </button>
+      <button mat-icon-button (click)="setEditCategory(category)">
+        <mat-icon aria-label="Example icon-button with a heart icon">edit</mat-icon>
+      </button>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </mat-list>
+</mat-card>
+
+<mat-card *ngIf="editingCategory" style="display:flex; flex-direction: column; justify-content: space-around;">
+  <mat-list-item style="margin-bottom: 25px">
+    <span>Editar categoría</span>
+  </mat-list-item>
+  <mat-form-field>
+      <input type="text" matInput placeholder="Nombre"  [value]="categoryToEdit.name" [(ngModel)]="categoryToEdit.name">
+  </mat-form-field>
+  <mat-form-field>
+      <input type="text" matInput placeholder="Icono"  [value]="categoryToEdit.icono" [(ngModel)]="categoryToEdit.icono">
+  </mat-form-field>
+  <div style="display:flex; flex-direction: row; justify-content: space-around;">
+    <button mat-button (click)="editCategory()">Ok</button>
+    <button mat-button (click)="editingCategory = !editingCategory">Cancelar</button>
   </div>
-</div>
+</mat-card>
 
-<div *ngIf="editingCategory">
-  <span>{{categoryToEdit.name }}</span>
-  <input type="text" name="" id="" [value]="categoryToEdit.name" [(ngModel)]="categoryToEdit.name">
-  <span>{{categoryToEdit.icono }}</span>
-  <input type="text" name="" id="" [value]="categoryToEdit.icono" [(ngModel)]="categoryToEdit.icono">
-  <button (click)="editCategory()">Ok</button>
-  <button (click)="editingCategory = !editingCategory">Cancelar</button>
-</div>
+<button class="btn-create-family" mat-fab color="primary" (click)="creatingCategory = !creatingCategory" *ngIf="!editingCategory">
+    <mat-icon *ngIf="creatingCategory">close</mat-icon>
+    <mat-icon *ngIf="!creatingCategory">add</mat-icon>
+</button>

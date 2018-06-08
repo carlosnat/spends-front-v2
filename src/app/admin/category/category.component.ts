@@ -17,7 +17,8 @@ export class CategoryComponent implements OnInit {
   editingCategory = false;
   categoryToEdit;
   AllCategories;
-  groupIdSelected;
+  groupSelected;
+  creatingCategory = false;
 
   constructor(private store: StoreService, private fb: FormBuilder, private caterogyService: CategoryService) { }
 
@@ -31,7 +32,7 @@ export class CategoryComponent implements OnInit {
 
   getAllCategories() {
       this.AllCategories = this.family.categories;
-      if (this.groupIdSelected) { this.selectGroup(this.groupIdSelected); }
+      if (this.groupSelected) { this.selectGroup(this.groupSelected); }
   }
 
   createCategoryForm() {
@@ -49,6 +50,7 @@ export class CategoryComponent implements OnInit {
       this.caterogyService.create(categoryToCreate).subscribe( async (res) => {
         this.categoryForm.get('name').setValue('');
         this.categoryForm.get('icono').setValue('');
+        this.creatingCategory = false;
         await this.store.updateFamily(this.family._id);
       });
     }
@@ -72,9 +74,9 @@ export class CategoryComponent implements OnInit {
     });
   }
 
-  selectGroup(groupId) {
-    this.groupIdSelected = groupId;
-    this.categories = this.AllCategories.filter( category => category.belongsToGroup === this.groupIdSelected);
+  selectGroup(event) {
+    this.groupSelected = event;
+    this.categories = this.AllCategories.filter( category => category.belongsToGroup === this.groupSelected._id);
   }
 
 }
