@@ -17,16 +17,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor(private store: StoreService, private opearationService: OperationService) { }
 
   async ngOnInit() {
-    this.sub = this.store.currentFamily.subscribe( (family: Family) => {
+    /* this.sub = this.store.currentFamily.subscribe( (family: Family) => {
       this.family = family;
       this.opearationService.getAll(this.family ._id).subscribe( res => {
         this.opeartions = res;
       });
-    });
+    }); */
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    // this.sub.unsubscribe();
   }
 
 }

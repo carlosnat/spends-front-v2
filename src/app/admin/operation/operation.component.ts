@@ -16,7 +16,7 @@ export class OperationComponent implements OnInit {
   public family: Family;
   categories;
   operationForm: FormGroup;
-  imagePreview;
+  imagePreview: any = '';
   operationImage: File = null;
   imageDataSaved;
   uploadImageProgress;
@@ -57,19 +57,23 @@ export class OperationComponent implements OnInit {
   }
 
   uploadImage() {
-    this.isUploading = true;
     this.isSaving = true;
-    const fd = new FormData();
-    fd.append('image', this.operationImage, this.operationImage.name);
-    this.operationService.uploadImage(fd).subscribe( event => {
-      if (event.type === HttpEventType.UploadProgress) {
-        this.uploadImageProgress = Math.round(((event.loaded / event.total) * 100));
-      } else if (event.type === HttpEventType.Response) {
-        this.isUploading = false;
-        this.imageDataSaved = event.body;
-        this.saveOperation();
-      }
-    });
+    if (this.operationImage && this.operationImage.name) {
+      this.isUploading = true;
+      const fd = new FormData();
+      fd.append('image', this.operationImage, this.operationImage.name);
+      this.operationService.uploadImage(fd).subscribe( event => {
+        if (event.type === HttpEventType.UploadProgress) {
+          this.uploadImageProgress = Math.round(((event.loaded / event.total) * 100));
+        } else if (event.type === HttpEventType.Response) {
+          this.isUploading = false;
+          this.imageDataSaved = event.body;
+          this.saveOperation();
+        }
+      });
+    } else {
+      this.saveOperation();
+    }
   }
 
   saveOperation() {

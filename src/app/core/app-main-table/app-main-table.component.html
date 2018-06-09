@@ -1,0 +1,56 @@
+<div class="mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource" matSort aria-label="Elements">
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="Fecha de registro">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha de registro</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.createdAt | date: 'short'}}</mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="Fecha de operación">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha de operación</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.occurrenceDate | date: 'short'}}</mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="Grupo">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Grupo</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.group.name}}</mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="Categoría">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Categoría</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.category.name}}</mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="Tipo de operación">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Tipo de operación</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.type}}</mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="Descripción">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.description}}</mat-cell>
+    </ng-container>
+
+      <!-- Name Column -->
+    <ng-container matColumnDef="Monto">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Monto</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.amount}}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator #paginator
+    [length]="dataSource?.data.length"
+    [pageIndex]="0"
+    [pageSize]="50"
+    [pageSizeOptions]="[25, 50, 100, 250]">
+  </mat-paginator>
+</div>

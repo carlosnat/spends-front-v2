@@ -24,13 +24,11 @@ export class StoreService {
 
   async updateFamily(familyId) {
       const familyUpdated = await this.http.get(`${environment.api_base}family/${familyId}`).toPromise();
-      console.log('familyUpdated', familyUpdated);
       this.updateLocalFamily(familyUpdated);
   }
 
   updateLocalFamily(familyUpdated) {
     window.localStorage.setItem('familySelected', JSON.stringify(familyUpdated));
-    console.log('familyUpdated broadcast', familyUpdated);
     this.familySource.next(familyUpdated);
   }
 
