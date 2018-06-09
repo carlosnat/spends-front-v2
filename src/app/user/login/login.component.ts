@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   userForm: FormGroup;
   private loginSub;
   public errorMessage;
+  public isRequesting = false;
 
 
   constructor(private router: Router, private fb: FormBuilder, private userService: UserService) { }
@@ -31,10 +32,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login() {
+    this.isRequesting = true;
     if (this.userForm.valid) {
       this.loginSub = this.userService.login(this.userForm.value).subscribe(
         res => {
           this.userService.saveStorage(res);
+          this.isRequesting = false;
           this.router.navigate(['admin/stats']);
         },
         err => {

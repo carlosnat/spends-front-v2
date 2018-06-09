@@ -22,15 +22,15 @@
         </p>
 
         <div class="auth-btn-wrap">
-          <p class="loginButtons">
-            <button type="submit" mat-button value="Entrar" (click)="login()" [disabled]="userForm.invalid">Entrar</button>
-          </p>
 
           <p class="loginButtons">
-            <button type="submit" mat-button value="Entrar" (click)="signup()">Crear cuenta</button>
+            <button *ngIf="!isRequesting" type="submit" mat-button value="Entrar" (click)="login()" [disabled]="userForm.invalid">Entrar</button>
+          </p>
+          <div class="lds-ripple" *ngIf="isRequesting"><div></div><div></div></div>
+          <p class="loginButtons">
+            <button *ngIf="!isRequesting" type="submit" mat-button value="Entrar" (click)="signup()">Crear cuenta</button>
           </p>
         </div>
-
       </form>
     </mat-card-content>
   </mat-card>
