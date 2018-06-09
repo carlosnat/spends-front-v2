@@ -37,21 +37,18 @@
 
     <mat-form-field>
       <mat-select placeholder="Selecciona categoria de gasto" formControlName="type">
+        <mat-option value="">Selecciona el tipo de operación</mat-option>
         <mat-option value="inflow">Gasto</mat-option>
         <mat-option value="outflow">Ingreso</mat-option>
       </mat-select>
     </mat-form-field>
 
-    <label>Foto para respaldar gasto</label>
     <input type="file" style="display: none" #inputUpload (change)="onSelectedFile($event)">
-    <button mat-button (click)="inputUpload.click()">Cargar foto</button>
-
+    <button mat-button (click)="inputUpload.click()">Cargar foto de respaldo</button>
     <img [src]="imagePreview" alt="" accept="image/*" style="max-width: 50%;">
 
-    <button mat-button (click)="uploadImage()">Guardar operación</button>
+    <button mat-button (click)="uploadImage()" [disabled]="isSaving || operationForm.invalid">Guardar operación</button>
 
-
-    <mat-progress-bar *ngIf="isUploading" mode="determinate" [value]="uploadImageProgress "></mat-progress-bar>
-
+    <mat-progress-bar *ngIf="isUploading" mode="determinate" [value]="uploadImageProgress"></mat-progress-bar>
   </form>
 </mat-card>

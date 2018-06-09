@@ -21,6 +21,7 @@ export class OperationComponent implements OnInit {
   imageDataSaved;
   uploadImageProgress;
   isUploading = false;
+  isSaving = false;
 
   constructor(
     private store: StoreService,
@@ -42,7 +43,7 @@ export class OperationComponent implements OnInit {
       amount: ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],
       description: [''],
       occurrenceDate: [''],
-      type : ['']
+      type : ['', Validators.required]
     });
   }
 
@@ -57,6 +58,7 @@ export class OperationComponent implements OnInit {
 
   uploadImage() {
     this.isUploading = true;
+    this.isSaving = true;
     const fd = new FormData();
     fd.append('image', this.operationImage, this.operationImage.name);
     this.operationService.uploadImage(fd).subscribe( event => {
@@ -80,6 +82,7 @@ export class OperationComponent implements OnInit {
         this.operationImage = null;
         this.imagePreview = null;
         await this.store.updateFamily(this.family._id);
+        this.isSaving = false;
       });
     }
   }
