@@ -14,6 +14,9 @@
 </mat-card>
 
 <mat-card *ngIf="!editingGroup && !creatingGroup">
+  <mat-card-header *ngIf="groups.length === 0">
+    <p>Crea un grupo de gastos haciendo clic en el boton all (+)</p>
+  </mat-card-header>
   <mat-list *ngIf="!editingGroup && groups && groups.length > 0">
     <h3 mat-subheader>Grupos para categorias creados</h3>
     <mat-list-item *ngFor="let group of groups">
