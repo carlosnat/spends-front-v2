@@ -17,12 +17,13 @@
             </mat-form-field>
           </p>
 
+
           <div class="auth-btn-wrap">
-            <p class="loginButtons">
+            <p class="loginButtons" *ngIf="!conecting">
               <button type="submit" mat-button routerLink="/login">Cancelar</button>
             </p>
-
-            <p class="loginButtons">
+            <div class="lds-ripple" *ngIf="conecting"><div></div><div></div></div>
+            <p class="loginButtons" *ngIf="!conecting">
               <button type="submit" mat-button (click)="createUser()" [disabled]="userForm.invalid || conecting">Crear cuenta</button>
             </p>
           </div>

@@ -28,9 +28,11 @@
           </p>
           <div class="lds-ripple" *ngIf="isRequesting"><div></div><div></div></div>
           <p class="loginButtons">
-            <button *ngIf="!isRequesting" type="submit" mat-button value="Entrar" (click)="signup()">Crear cuenta</button>
+            <button *ngIf="!isRequesting" type="submit" mat-button value="Entrar" (click)="signup()">no tienes una cuenta?</button>
           </p>
+
         </div>
+
       </form>
     </mat-card-content>
   </mat-card>
