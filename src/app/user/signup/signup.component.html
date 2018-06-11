@@ -1,9 +1,12 @@
 <div class="auth">
     <mat-card>
       <mat-card-title>
+
         <img class="logo-auth" src="../../../assets/logo.jpg" alt="">
         <div style="text-align: center;font-size:1rem;margin-top: 25px;">SignUp</div>
+
       </mat-card-title>
+
       <mat-card-content>
         <form [formGroup]="userForm">
           <p>
@@ -18,7 +21,6 @@
             </mat-form-field>
           </p>
 
-
           <div class="auth-btn-wrap">
             <p class="loginButtons" *ngIf="!conecting">
               <button type="submit" mat-button (click)="createUser()" [disabled]="userForm.invalid || conecting">Crear cuenta</button>
@@ -28,7 +30,6 @@
               <button type="submit" mat-button routerLink="/login">Cancelar</button>
             </p>
           </div>
-
         </form>
       </mat-card-content>
     </mat-card>
