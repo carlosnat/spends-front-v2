@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../service/user-service';
 import { Router } from '@angular/router';
-
+import { MatSnackBar } from '@angular/material';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -14,7 +14,11 @@ export class SignupComponent implements OnInit, OnDestroy {
   public userSub;
   public conecting = false;
 
-  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) { }
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    private router: Router,
+    public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.createUserForm();
@@ -34,7 +38,10 @@ export class SignupComponent implements OnInit, OnDestroy {
       (result) => {
         this.userForm.reset();
         this.router.navigate(['login']);
-        this.conecting = true;
+        this.conecting = false;
+        this.snackBar.open('Usuario creado', '', {
+          duration: 1500,
+        });
       },
       (error) => {
         this.conecting = false;
